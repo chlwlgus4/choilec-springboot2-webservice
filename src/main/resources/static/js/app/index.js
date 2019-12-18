@@ -28,7 +28,7 @@ var index = {
             alert('글이 등록되었습니다.');
             window.location.href = '/';
             //글 등록이 성공하면 메인페이지로 이동
-        }).fail(function () {
+        }).fail(function (error) {
             alert(JSON.stringify(error));
         });
     },
