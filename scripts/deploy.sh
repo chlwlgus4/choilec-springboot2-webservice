@@ -5,7 +5,7 @@ PROJECT_NAME=choilec-springboot2-webservice
 
 echo "> Deploy.sh 권한부여"
 
-chmod +x ./gradlew
+chmod +x ./deploy.sh
 
 echo "> Build 파일 복사"
 
