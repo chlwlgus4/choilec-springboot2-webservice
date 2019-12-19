@@ -4,7 +4,9 @@ files:
   - source:  /
     destination: /home/ec2-user/app/step2/zip/
     overwrite: yes
-    permesion: chmod +x ./deploy.sh
+
+before_install:
+  - chmod +x ./deploy.sh
 
 permissions:
   - object: /
