@@ -12,9 +12,8 @@ permissions:
     group: ec2-user
 
 hook:
-  before_install:
-    - chmod +x ./deploy.sh
   ApplicationStart:
+    - chmod +x ./deploy.sh
     - location: deploy.sh
       timeout: 60
       runas: ec2-user
