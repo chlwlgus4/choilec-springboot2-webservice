@@ -5,9 +5,6 @@ files:
     destination: /home/ec2-user/app/step2/zip/
     overwrite: yes
 
-before_install:
-  - chmod +x ./deploy.sh
-
 permissions:
   - object: /
     pattern: "**"
@@ -15,6 +12,8 @@ permissions:
     group: ec2-user
 
 hook:
+  before_install:
+    - chmod +x ./deploy.sh
   ApplicationStart:
     - location: deploy.sh
       timeout: 60
