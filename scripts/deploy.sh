@@ -3,6 +3,10 @@
 REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=choilec-springboot2-webservice
 
+echo "> Deploy.sh 권한부여"
+
+chmod +x ./gradlew
+
 echo "> Build 파일 복사"
 
 cp $REPOSITORY/zip/*.jar $REPOSITORY/
