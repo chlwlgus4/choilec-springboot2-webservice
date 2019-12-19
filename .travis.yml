@@ -49,6 +49,7 @@ deploy:
     wait-until-deployed: true
 
 after_deploy:
+  - cd /home/ec2-user/app/step2/zip
   - chmod +x ./deploy.sh
 
 # CI 실행 완료시 메일로 알람
