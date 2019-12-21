@@ -17,8 +17,7 @@ public class ProfileControllerUnitTest {
         env.addActiveProfile("oauth");
         env.addActiveProfile("real-db");
 
-        ProfileController controller = new
-                                ProfileController(env);
+        ProfileController controller = new ProfileController(env);
 
         //when
         String profile = controller.profile();
