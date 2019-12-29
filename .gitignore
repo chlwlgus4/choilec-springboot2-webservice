@@ -1,6 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gradle
 .idea
+Application
+application.properties
 application-oauth.properties
 application-real.properties
 # Project exclude paths

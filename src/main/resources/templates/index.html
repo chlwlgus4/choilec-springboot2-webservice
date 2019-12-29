@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout/default-layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+</head>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div>
+            <th:block th:if="${not #strings.isEmpty(userName)}">
+                <div class="pull-right">
+                    <span id="user" th:text="${userName}"></span>
+                    <span>님</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                </div>
+            </th:block>
+            <th:block th:if="${#strings.isEmpty(userName)}">
+            <a th:href="@{/oauth2/authorization/google}" class="btn_social" role="button"><img th:src="@{/images/google.png}"  width="40px" height="40px"/></a>
+            <a th:href="@{/oauth2/authorization/naver}" class="btn_social" role="button"><img th:src="@{/images/naver.png}"  width="125px" height="30px"/></a>
+            </th:block>
+        </div>
+        <br>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-1">번호</th>
+                    <th class="col-md-2">제목</th>
+                    <th class="col-md-5">작성자</th>
+                    <th class="col-md-2">작성 날짜</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}" th:onclick="|javascript:location.href='/posts/update/'+${post.id}|">
+                <td><a th:text="${post.id}" ></a></td>
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.author}"></td>
+                <td th:text="${post.modifiedDate} ? ${#temporals.format(post.modifiedDate,'yyyy-MM-dd HH:mm')} : ${post.modifiedDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/posts/save" role="button" class="btn btn-primary pull-right">글 등록</a>
+        <br/>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" style="text-align:center;">
+            <ul class="pagination" th:with="startNumber=${T(Math).floor(posts.number/10)}*10+1, endNumber=(${posts.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${posts.totalPages}">
+                <li><a aria-label="Previous" href="/board/list?page=1">&laquo;</a></li>
+                <li th:style="${posts.first} ? 'display:none'">
+                    <a th:href="@{/board/(page=${posts.number})}">&lsaquo;</a>
+                </li>
+
+                <li th:each="page :${#numbers.sequence(startNumber, endNumber)}" th:class="(${page} == ${posts.number}+1) ? 'active'">
+                    <a th:href="@{/board/(page=${page})}" th:text="${page}" th:class="(${page} == 0) ? 'hide'"><span class="sr-only"></span></a>
+                </li>
+
+                <li th:style="${posts.last} ? 'display:none'">
+                    <a th:href="@{/board/(page=${posts.number}+2)}">&rsaquo;</a>
+                </li>
+                <li><a aria-label="Next" th:href="@{/board/(page=${posts.totalPages})}">&raquo;</a></li>
+            </ul>
+        </nav>
+        <!-- /Pagination -->
+    </div>
+</div>
+
+</html>
