@@ -31,6 +31,11 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/index2")
+    public String index2() {
+        return "index2";
+    }
+
     /*@GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());

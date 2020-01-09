@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="layout/default-layout">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Title</title>
-</head>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default-layout">
 <div layout:fragment="content">
+    <!-- Page Content -->
     <div class="container">
-        <div>
+<!--        <div>
             <th:block th:if="${not #strings.isEmpty(userName)}">
                 <div class="pull-right">
                     <span id="user" th:text="${userName}"></span>
@@ -21,7 +15,7 @@ layout:decorator="layout/default-layout">
             <a th:href="@{/oauth2/authorization/google}" class="btn_social" role="button"><img th:src="@{/images/google.png}"  width="40px" height="40px"/></a>
             <a th:href="@{/oauth2/authorization/naver}" class="btn_social" role="button"><img th:src="@{/images/naver.png}"  width="125px" height="30px"/></a>
             </th:block>
-        </div>
+        </div>-->
         <br>
         <table class="table table-hover">
             <thead>
@@ -41,7 +35,7 @@ layout:decorator="layout/default-layout">
             </tr>
             </tbody>
         </table>
-        <a href="/posts/save" role="button" class="btn btn-primary pull-right">글 등록</a>
+        <a href="/posts/save" role="button" class="btn btn-secondary fa-pull-right">글 등록</a>
         <br/>
 
         <!-- Pagination -->
