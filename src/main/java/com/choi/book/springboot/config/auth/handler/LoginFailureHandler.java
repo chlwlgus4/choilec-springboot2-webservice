@@ -16,7 +16,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String userName = request.getParameter("username");
         String password = request.getParameter("password");
-
         request.setAttribute("userName", userName);
         request.setAttribute("errorMsg", "가입하지 않은 아이디이거나,<br>잘못된 비밀번호입니다.");
 

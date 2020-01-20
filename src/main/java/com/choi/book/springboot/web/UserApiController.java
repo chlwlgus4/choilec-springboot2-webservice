@@ -12,8 +12,9 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/user/api")
+    @PostMapping("/user/api/save")
     public String save(@RequestBody UserSaveRequestDto requestDto) {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaa");
         userService.save(requestDto);
         return "";
     }

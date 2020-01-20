@@ -34,7 +34,6 @@ public class UserService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User entity = userRepository.findByEmail(username)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
 

@@ -19,20 +19,21 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">로그인</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="/login" method="post">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="아이디 입력">
+                                            <input type="email" class="form-control form-control-user" name="username" aria-describedby="emailHelp" placeholder="아이디 입력">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="비밀번호 입력">
+                                            <input type="password" class="form-control form-control-user" name="password" placeholder="비밀번호 입력">
                                         </div>
                                         <div class="form-group">
+                                            <label th:if="${not #strings.isEmpty(errorMsg)}" class="small text-danger" th:utext="${errorMsg}"></label>
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
                                                 <label class="custom-control-label" for="customCheck">아이디/비밀번호 저장</label>
                                             </div>
                                         </div>
-                                        <a href="/" class="btn btn-primary btn-user btn-block">로그인</a>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>
                                         <hr>
                                         <a th:href="@{/oauth2/authorization/google}" class="btn-block"><img  class="img-fluid" th:src="@{/images/google/google.png}"></a>
                                         <a th:href="@{/oauth2/authorization/naver}" class="btn-block"><img  class="img-fluid" th:src="@{/images/naver/naver.png}"></a>
