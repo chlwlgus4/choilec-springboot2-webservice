@@ -54,7 +54,7 @@
     <script src="js/app/index.js"></script>
     <script th:inline="javascript">
         $(function () {
-            let dupleChk;
+            let dupleChk = true;
             $("#emailChk").click(function () {
 
                 let email = $('#email').val();
@@ -68,9 +68,11 @@
                 }).done(function (data) {
                     if (data) {
                         alert("존재하는 이메일입니다.");
+                        dupleChk = data;
                     } else {
                         alert("사용 가능합니다.");
                         dupleChk = data;
+                        alert(dupleChk)
                     }
                     //window.location.href = '/';
                 }).fail(function (error) {
