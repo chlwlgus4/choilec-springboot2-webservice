@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/non-layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/non-layout">
 <div layout:fragment="content">
     <link rel="stylesheet" href="css/sb-admin-2.min.css">
     <div class="container">
@@ -13,25 +14,35 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
                             </div>
-                            <form class="user" action="/user/api">
+                            <form class="user">
                                 <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="name" placeholder="이름">
+                                    <input type="text" class="form-control form-control-user" id="name" placeholder="이름">
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email" placeholder="이메일">
+                                <div class="form-group row">
+                                    <div class="col-sm-8 mb-3 mb-sm-0">
+                                        <input type="email" class="form-control form-control-user" id="email" placeholder="이메일">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn btn-primary btn-user btn-block" id="emailChk">중복 확인</button>
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user" id="password" placeholder="비밀번호">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="비밀번호 확인">
+                                        <input type="password" class="form-control form-control-user" id="repeatPassword" placeholder="비밀번호 확인">
                                     </div>
                                 </div>
-                                <button type="button" id="btn-reg" class="btn btn-primary btn-user btn-block">회원가입</button>
+                                <button type="button" id="btn-reg" class="btn btn-primary btn-user btn-block">회원가입
+                                </button>
                                 <hr>
-                                <a th:href="@{/oauth2/authorization/google}" class="btn-block"><img  class="img-fluid" th:src="@{/images/google/google2.png}"></a>
-                                <a th:href="@{/oauth2/authorization/naver}" class="btn-block"><img  class="img-fluid" th:src="@{/images/naver/naver2.png}"></a>
+                                <a th:href="@{/oauth2/authorization/google}" class="btn-block">
+                                    <img class="img-fluid" th:src="@{/images/google/google2.png}">
+                                </a>
+                                <a th:href="@{/oauth2/authorization/naver}" class="btn-block">
+                                    <img class="img-fluid" th:src="@{/images/naver/naver2.png}">
+                                </a>
                             </form>
                             <hr>
                         </div>
@@ -41,6 +52,83 @@
         </div>
     </div>
     <script src="js/app/index.js"></script>
+    <script th:inline="javascript">
+        $(function () {
+            let dupleChk;
+            $("#emailChk").click(function () {
+
+                let email = $('#email').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/api/duple',
+                    data: email,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                }).done(function (data) {
+                    if (data) {
+                        alert("존재하는 이메일입니다.");
+                    } else {
+                        alert("사용 가능합니다.");
+                        dupleChk = data;
+                    }
+                    //window.location.href = '/';
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            });
+
+            $('#btn-reg').on('click', function () {
+
+                if(!dupleChk){
+                    alert("아이디 중복검사를 해주세요");
+                    return false;
+                }
+
+                if (!isEmail($('#email').val())) {
+                    alert("이메일 형식이 맞지 않습니다.");
+                    return false;
+                }
+
+                if ($('#password').val() != $('#repeatPassword').val()) {
+
+                    $('#repeatPassword').val('');
+                    $('#repeatPassword').attr("placeholder", "8 ~ 16자 영문, 숫자, 특수문자 조합");
+                    alert("비밀번호가 다릅니다.")
+                    return false;
+                }
+
+                if (!isPassword($('#password').val())) {
+                    alert("비밀번호 형식이 맞지 않습니다.");
+                    $('#password').val('');
+                    $('#repeatPassword').val('');
+                    $('#repeatPassword').attr("placeholder", "8 ~ 16자 영문, 숫자, 특수문자 조합");
+                    $('#password').attr("placeholder", "8 ~ 16자 영문, 숫자, 특수문자 조합");
+                    $('#password').focus();
+                    return false;
+                }
+
+                const data = JSON.stringify({
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/api/save',
+                    data: data,
+                    dataType: 'text',
+                    contentType: 'application/json; charset=utf-8',
+                }).done(function () {
+                    window.location.href = '/login';
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            });
+
+        })
+    </script>
 </div>
 </html>
 

@@ -29,7 +29,7 @@
                                         <div class="form-group">
                                             <label th:if="${not #strings.isEmpty(errorMsg)}" class="small text-danger" th:utext="${errorMsg}"></label>
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck" onclick="rememberChk(this)">
                                                 <label class="custom-control-label" for="customCheck">아이디/비밀번호 저장</label>
                                             </div>
                                         </div>
@@ -53,5 +53,33 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        $(function () {
+            const email = getCookie("username");
+            const password = getCookie("password");
+
+            if(isNull(email)){
+                $("#customCheck").attr("checked",false);
+            }else{
+                $("input[name=username]").val(email);
+                $("input[name=password]").val(password);
+                $("#customCheck").attr("checked",true);
+            }
+        })
+        function rememberChk(e) {
+            let checked = e.checked;
+
+            let username = $("input[name=username]").val();
+            let password = $("input[name=password]").val();
+
+            if(checked){
+                setCookie("username",username,7);
+                setCookie("password",password,7);
+            }else{
+                deleteCookie("username");
+                deleteCookie("password");
+            }
+        }
+    </script>
 </div>
 </html>

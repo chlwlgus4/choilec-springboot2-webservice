@@ -10,9 +10,6 @@ var index = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
-        $('#btn-reg').on('click', function () {
-            _this.register();
-        })
     },
     save : function () {
         var data = {
@@ -71,24 +68,5 @@ var index = {
             alert(JSON.stringify(error));
         });
     },
-    register: function () {
-        var data = JSON.stringify({
-            name: $('#name').val(),
-            email: $('#email').val(),
-            password: $('#password').val()
-        });
-
-        $.ajax({
-            type: 'POST',
-            url: '/user/api/save',
-            data: data,
-            dataType: 'text',
-            contentType: 'application/json; charset=utf-8',
-        }).done(function() {
-            window.location.href = '/login';
-        }).fail(function (error) {
-            alert(JSON.stringify(error));
-        });
-    }
 };
 index.init();

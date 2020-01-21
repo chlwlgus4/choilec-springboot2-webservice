@@ -1,6 +1,5 @@
 package com.choi.book.springboot.service.user;
 
-import com.choi.book.springboot.config.auth.dto.SessionUser;
 import com.choi.book.springboot.domain.user.Role;
 import com.choi.book.springboot.domain.user.User;
 import com.choi.book.springboot.domain.user.UserRepository;
@@ -17,11 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+
+    @Transactional
+    public boolean dupleChk(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+
+        return user.isPresent();
+    }
 
     @Transactional
     public String save(UserSaveRequestDto requestDto) {
